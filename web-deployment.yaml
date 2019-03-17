@@ -18,7 +18,7 @@ spec:
         io.kompose.service: web
     spec:
       containers:
-      - image: web
+      - image: jfrevert/py-kube-app:latest
         name: web
         ports:
         - containerPort: 80
