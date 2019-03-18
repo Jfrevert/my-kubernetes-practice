@@ -1,11 +1,25 @@
 version: '3'
 services:
+
   web:
+    build: ./frontend
+    # networks:
+    # - frontend
+    ports:
+    - "9000:9000"
+
+  app:
     build: ./app
+    # networks:
+    # - frontend
+    # - backend
     ports:
     - "80:80"
+
   db:
     build: ./db
     ports:
     - "27017:27017"
     - "28017:28017"
+    # networks:
+    #   - backend

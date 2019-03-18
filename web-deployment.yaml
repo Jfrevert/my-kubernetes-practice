@@ -18,10 +18,10 @@ spec:
         io.kompose.service: web
     spec:
       containers:
-      - image: jfrevert/py-kube-app:latest
+      - image: jfrevert/py-kube-web:latest
         name: web
         ports:
-        - containerPort: 80
+        - containerPort: 9000
         resources: {}
       restartPolicy: Always
 status: {}

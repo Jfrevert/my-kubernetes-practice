@@ -6,8 +6,8 @@ metadata:
     kompose.version: 1.16.0 (0c01309)
   creationTimestamp: null
   labels:
-    io.kompose.service: db
-  name: db
+    io.kompose.service: app
+  name: app
 spec:
   replicas: 1
   strategy: {}
@@ -15,14 +15,13 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: db
+        io.kompose.service: app
     spec:
       containers:
-      - image: jfrevert/py-kube-db:latest
-        name: db
+      - image: py-kube-app:latest
+        name: app
         ports:
-        - containerPort: 27017
-        - containerPort: 28017
+        - containerPort: 80
         resources: {}
       restartPolicy: Always
 status: {}
