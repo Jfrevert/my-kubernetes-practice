@@ -21,7 +21,7 @@ spec:
       - image: jfrevert/py-kube-app:latest
         name: app
         ports:
-        - containerPort: 80
+        - containerPort: 888
         resources: {}
       restartPolicy: Always
 status: {}

@@ -23,7 +23,7 @@ class TodoList extends React.Component {
       }
     
     handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
+    console.log(this.state.value);
     event.preventDefault();
     this.createComponent();
     }
@@ -75,7 +75,7 @@ class TodoList extends React.Component {
             <ul>
                 {this.state.todos.map((name, index) => {
                     return <li key={ index }>
-                                <Card todo={name}/>
+                                <Card todo={name} parentFunction={this.getComponents}/>
                             </li>;
                   })}
             </ul>
