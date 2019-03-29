@@ -1,0 +1,14 @@
+.header {
+    background-color: white;
+  }
+
+.header-text {
+        background-color: 'white';
+        color: white;
+        padding: 0;
+        margin-block-start: 0em;
+        margin-block-end: 0em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+
