@@ -1,4 +1,5 @@
 import React from 'react'
+import './DropDown.css'
 
 class DropDown extends React.Component {
     constructor(props) {
@@ -10,7 +11,9 @@ class DropDown extends React.Component {
     }
 
     handleChange = (event) => {
-        this.setState({ selectValue: event.target.value });
+        this.setState({ selectValue: event.target.value },() => {
+            this.setApplicationStatus();
+        });
       }
 
     setApplicationStatus = () => {
@@ -20,16 +23,11 @@ class DropDown extends React.Component {
     render () {
 
         return (
-            <div>
-                {/* <h3> {this.props.selectedStatus} </h3> */}
-                <button onClick={this.setApplicationStatus}> TEST SET STATE FROM DROPDOWN COMPONENT</button>
-
                 <select value={this.state.selectValue} onChange={this.handleChange} >
                     <option value="green">green</option>
                     <option value="yellow">yellow</option>
                     <option value="red">red</option>
                 </select>
-            </div>       
         )
 
 

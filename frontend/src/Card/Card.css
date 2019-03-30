@@ -17,6 +17,10 @@
     height: 30px;
   }
 
+  .card .app-name {
+    display: inline;
+  }
+
 .dropdown {
   position: relative;
   display: inline-block;

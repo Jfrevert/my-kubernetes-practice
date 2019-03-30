@@ -17,6 +17,10 @@ class Header extends React.Component  {
         this.handleChange = this.handleChange.bind(this);
       }
 
+      componentDidMount () {
+          console.log('in the card component, these props are available: ' + JSON.stringify(this.props))
+      }
+
       handleToggleClick() {
           if(this.state.edit) {
               this.handleSubmit()
@@ -69,31 +73,61 @@ class Header extends React.Component  {
     }
 
     render(props) {
-        if (this.state.edit) {
-            return (
-                <div className="card">
-                        <p>Edit {this.state.application_name}'s name</p>
-                        <textarea value={this.state.value} onChange={this.handleChange} />
-                        <button onClick={this.handleToggleClick}>Save</button>
-                        <p>Edit {this.state.application_name}'s status</p>
 
-                </div>
-            )
-        } else {
+
+        if(this.props.parentEdit){
+            if (this.state.edit) {
+                return (
+                    <div className="card">
+                            <p>Edit {this.state.application_name}'s name</p>
+                            <textarea value={this.state.value} onChange={this.handleChange} />
+                            <button onClick={this.handleToggleClick}>Save</button>
+                            <p>Edit {this.state.application_name}'s status</p>
+    
+                    </div>
+                )
+                
+            } else {
+                return (
+                    <div className="card">
+                        <div className="app-name">
+                            <h3> {this.state.application_name} 
+                                <button onClick={this.handleToggleClick}>
+                                    Edit Name
+                                </button>
+                            </h3>
+                        </div>
+    
+                        <div class="status">
+                            <h3> Status: {this.state.application_status} 
+                            <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
+                            </h3>
+                        </div>
+                    </div>
+                );
+            }
+        } else if (!this.props.parentEdit) {
             return (
                 <div className="card">
-                    <h3> {this.state.application_name} </h3>
-                    <button onClick={this.handleToggleClick}>
-                        Edit Name
-                    </button>
+                    <div className="app-name">
+                        <h3> {this.state.application_name} 
+                        </h3>
+                    </div>
 
                     <div class="status">
-                        <h3> Status: {this.state.application_status} </h3>
-                        <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
+                        <h3> Status: {this.state.application_status} 
+                        </h3>
                     </div>
                 </div>
             );
         }
+
+
+
+
+
+
+        
     }
 }
 

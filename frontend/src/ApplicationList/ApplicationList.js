@@ -8,13 +8,14 @@ class ApplicationList extends React.Component {
         this.state = {
           applications: [],
           value: 'Enter application name'
-        }
+                }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
         this.getApplications()
+        console.log('in the ApplicationList component, these props are available: ' + JSON.stringify(this.props))
     }
 
     handleChange(event) {
@@ -65,6 +66,7 @@ class ApplicationList extends React.Component {
       }
 
     render()  {
+        if (this.props.edit) {
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -74,12 +76,25 @@ class ApplicationList extends React.Component {
             <ul>
                 {this.state.applications.map((name, index) => {
                     return <li key={ index }>
-                                <Card application={name} getApplicationsThroughParent={this.getApplications}/>
+                                <Card application={name} getApplicationsThroughParent={this.getApplications} parentEdit={this.props.edit} />
                             </li>;
                   })}
             </ul>
             </div>
         )
+    } else if (!this.props.edit) {
+        return (
+            <div>
+                <ul>
+                    {this.state.applications.map((name, index) => {
+                        return <li key={ index }>
+                                    <Card application={name} getApplicationsThroughParent={this.getApplications} parentEdit={this.props.edit} />
+                                </li>;
+                    })}
+                </ul>
+            </div>
+        )
+    }
     }
 }
 
