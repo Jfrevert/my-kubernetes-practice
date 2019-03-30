@@ -1,8 +1,11 @@
-.header {
-    background-color: white;
-  }
 
-.header-text {
+
+.head-div {
+    height: 300px;
+}
+
+
+/* header-text {
         background-color: 'white';
         color: white;
         padding: 0;
@@ -10,5 +13,5 @@
         margin-block-end: 0em;
         margin-inline-start: 0px;
         margin-inline-end: 0px;
-    }
+    } */
 

@@ -1,13 +1,12 @@
 import React from 'react'
 import Card from '../Card/Card'
-import './TodoList.css'
+import './ApplicationList.css'
 
-
-class TodoList extends React.Component {
+class ApplicationList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          todos: [],
+          applications: [],
           value: 'Enter application name'
         }
         this.handleChange = this.handleChange.bind(this);
@@ -15,7 +14,7 @@ class TodoList extends React.Component {
     }
 
     componentDidMount() {
-        this.getComponents()
+        this.getApplications()
     }
 
     handleChange(event) {
@@ -23,27 +22,27 @@ class TodoList extends React.Component {
       }
     
     handleSubmit(event) {
-    console.log(this.state.value);
-    event.preventDefault();
-    this.createComponent();
+        // console.log(this.state.value);
+        event.preventDefault();
+        this.createApplication();
     }
 
-    getComponents() {
-        fetch('http://localhost/components')
+    getApplications() {
+        fetch('http://localhost/applications')
         .then((response) => response.json())
         .then((data) => {
             let dataArr = Object.values(data)
             return dataArr
         })
-        .then((dataArr) => this.setState({ todos: dataArr }))
+        .then((dataArr) => this.setState({ applications: dataArr }))
         .catch(err => {
             console.log(err)
     })
     }
   
-       createComponent(url = `http://localhost/new-component`, data = {
-         component_name: this.state.value,
-         component_status: "green"
+       createApplication(url = `http://localhost/new-application`, data = {
+         application_name: this.state.value,
+         application_status: "green"
        }) {
           return fetch(url, {
               method: "POST", 
@@ -60,7 +59,7 @@ class TodoList extends React.Component {
           })
           .then(response => {
               response.json()
-            this.getComponents()
+            this.getApplications()
             })
           .catch(err => console.log(err))
       }
@@ -73,9 +72,9 @@ class TodoList extends React.Component {
                     <input type="submit" value="Submit" />
                 </form>
             <ul>
-                {this.state.todos.map((name, index) => {
+                {this.state.applications.map((name, index) => {
                     return <li key={ index }>
-                                <Card todo={name} parentFunction={this.getComponents}/>
+                                <Card application={name} getApplicationsThroughParent={this.getApplications}/>
                             </li>;
                   })}
             </ul>
@@ -84,4 +83,4 @@ class TodoList extends React.Component {
     }
 }
 
-export default TodoList;
+export default ApplicationList;

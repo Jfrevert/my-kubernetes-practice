@@ -1,4 +1,5 @@
 import React from 'react';
+import DropDown from '../DropDown/DropDown'
 import './Card.css'
 
 
@@ -7,9 +8,9 @@ class Header extends React.Component  {
         super(props);
         this.state = {
             edit: false,
-            value: this.props.component_name,
-            component_name: this.props.todo.component_name,
-            component_status: this.props.todo.component_status
+            value: this.props.application_name,
+            application_name: this.props.application.application_name,
+            application_status: this.props.application.application_status
 
         };
         this.handleToggleClick = this.handleToggleClick.bind(this);
@@ -18,19 +19,18 @@ class Header extends React.Component  {
 
       handleToggleClick() {
           if(this.state.edit) {
-              //sent PUT with object here
               this.handleSubmit()
           }
         this.setState(state => ({
           edit: !state.edit
         }));
       }
-
-      handleSubmit() {
+      
+    handleSubmit() {
         const data = {
-            _id: this.props.todo._id.$oid ,
-            component_name: this.state.value,
-            component_status: this.props.todo.component_status
+            _id: this.props.application._id.$oid ,
+            application_name: this.state.value || this.state.application_name,
+            application_status: this.state.application_status
         }
 
          fetch('http://localhost/edit', {
@@ -43,13 +43,13 @@ class Header extends React.Component  {
           })
             .then(resp => {
                 if (resp.status >= 200 && resp.status < 300) {
-                    fetch('http://localhost/get?component=' + this.props.todo._id.$oid)
-                        .then((response) => response.json())
-                        .then((myJson)  => JSON.stringify(myJson.result))
-                        .then(final => this.setState({ component_name:final.component_name, component_status: final.component_status }))
-                        .then(this.props.parentFunction())
-                        .catch(err=> console.log(err))
-                        
+                    this.setState({ edit:false,
+                                    value: '',
+                                    application_name: data.application_name,
+                                    application_status: data.application_status
+                                 }, () => {
+                                     this.props.getApplicationsThroughParent()
+                                 })
                 }
             })
             .catch(err => console.log("There was an error: " + err))
@@ -59,21 +59,38 @@ class Header extends React.Component  {
         this.setState({value: event.target.value});
       }
 
+      setStateFromChild = (dropDownValueFromChild) => {
+          this.setState({ 
+            application_name: this.state.application_name,
+            application_status: dropDownValueFromChild
+         } , () => {
+            this.handleSubmit();
+         })
+    }
+
     render(props) {
         if (this.state.edit) {
             return (
                 <div className="card">
+                        <p>Edit {this.state.application_name}'s name</p>
                         <textarea value={this.state.value} onChange={this.handleChange} />
                         <button onClick={this.handleToggleClick}>Save</button>
+                        <p>Edit {this.state.application_name}'s status</p>
+
                 </div>
             )
         } else {
             return (
                 <div className="card">
-                    <h3> {this.state.component_name} </h3><h3> Status: {this.state.component_status} </h3>
+                    <h3> {this.state.application_name} </h3>
                     <button onClick={this.handleToggleClick}>
-                        Edit
+                        Edit Name
                     </button>
+
+                    <div class="status">
+                        <h3> Status: {this.state.application_status} </h3>
+                        <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
+                    </div>
                 </div>
             );
         }

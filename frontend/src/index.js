@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodoList from './TodoList/TodoList'
+import ApplicationList from './ApplicationList/ApplicationList'
 import Header from './Header/Header'
 import './index.css'
 
@@ -9,9 +9,9 @@ import * as serviceWorker from './serviceWorker';
 
 //foo={"bard"} will become props.foo in the code of the component
 ReactDOM.render(
-    <div>
+    <div className='lead-div'>
         <Header />
-        <TodoList />
+        <ApplicationList />
     </div>
     , document.getElementById('root'));
 
