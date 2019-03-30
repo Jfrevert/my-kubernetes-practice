@@ -20,7 +20,6 @@ class Header extends React.Component  {
                 <div class='head-div' style={this.head}>
                         <h1>Hello. Welcome to the status page app.</h1>
                         <h2>Start out by entering an application you would like to keep track of.</h2>
-                        <p>See the Published view by clicking Admin</p>
                 </div>
             );
         }

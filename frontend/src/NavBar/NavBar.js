@@ -1,6 +1,7 @@
 import React from 'react';
 import './NavBar.css'
-
+import { MdHome } from "react-icons/md";
+import { MdPublic } from "react-icons/md";
 
 class NavBar extends React.Component {
     constructor (props) {
@@ -20,7 +21,10 @@ class NavBar extends React.Component {
                 <nav>
                     <div className="navWide">
                         <div className="wideDiv">
-                            <h1 onClick={this.toggleAppEdit}>Public View</h1>
+                            <h1 onClick={this.toggleAppEdit}>
+                            See Public View 
+                            <MdPublic />
+                            </h1>
                             </div>
                     </div>
                 </nav>
@@ -30,7 +34,10 @@ class NavBar extends React.Component {
                 <nav>
                     <div className="navWide">
                         <div className="wideDiv">
-                            <h1 onClick={this.toggleAppEdit}>Admin</h1>
+                            <h1 onClick={this.toggleAppEdit}>
+                            See Edit View 
+                            <MdHome />
+                            </h1>
                             </div>
                     </div>
                 </nav>

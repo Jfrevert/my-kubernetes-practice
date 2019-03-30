@@ -64,11 +64,12 @@ class ApplicationList extends React.Component {
             })
           .catch(err => console.log(err))
       }
+      
 
     render()  {
         if (this.props.edit) {
         return (
-            <div>
+            <div className="applicationlist">
                 <form onSubmit={this.handleSubmit}>
                     <textarea value={this.state.value} onChange={this.handleChange} />
                     <input type="submit" value="Submit" />
@@ -84,7 +85,7 @@ class ApplicationList extends React.Component {
         )
     } else if (!this.props.edit) {
         return (
-            <div>
+            <div className="applicationlist">
                 <ul>
                     {this.state.applications.map((name, index) => {
                         return <li key={ index }>

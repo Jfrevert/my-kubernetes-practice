@@ -1,25 +1,43 @@
 .card {
     /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
     transition: 0.3s;
-    background-color: white;
+    background-color: #5e5e5e;
     width: 80%;
     height: 20%;
+    color: white;
+    overflow: hidden;
   }
 
   .card textarea {
     height: 1px;
-    width: 70%
+    width: 50%
   }
   
-  .card .button-group button{
-    width: 20vw;
-    height: 30px;
+  .card button{
+    /* width: 20vw;
+    height: 30px; */
+    float: right;
+    cursor: pointer;
+    background: transparent;
+    border: none !important;
+  }
+  li{
+    margin-top: 10px;
+}
+
+ li:first-child {
+    margin-top:0;
+}
+
+   button svg{
+    float: right;
+    color: white;
+    height: 3em;
+    width: 3em;
+    /* overflow: hidden; */
   }
 
-  .card .app-name {
-    display: inline;
-  }
 
 .dropdown {
   position: relative;

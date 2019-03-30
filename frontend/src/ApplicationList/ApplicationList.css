@@ -1,13 +1,28 @@
 
+.applicationlist{
+  /* display: flex; */
+  align-items: center;
+  justify-content: center 
+}
+
+form {
+      margin-left: auto;
+    margin-right: auto;
+}
+
   textarea {
     height:auto;
-    max-width:600px;
+    /* max-width:400px; */
     color:#999;
     font-weight:400;
     font-size:30px;
     font-family:'Ubuntu', Helvetica, Arial, sans-serif;
-    width:80%;
+    width: 70vw;
     background:#fff;
+    /* margin-left: auto;
+    margin-right: auto; */
+    margin-top: 2vh;
+    margin-left: 15vw;
     border-radius:3px;
     line-height:2em;
     border:none;
@@ -21,16 +36,19 @@
   }
 
   input{
-    background: rgba(214, 214, 214, 0);
- 
+    background-color: #8B3AE8;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
     border-color: #8B3AE8;
     border-color: -moz-linear-gradient(45deg, #8B3AE8 0%, #E00B45 100%, #C59237 100%);
     border-color: -webkit-linear-gradient(45deg, #8B3AE8 0%, #E00B45 100%, #C59237 100%);
     border-color: linear-gradient(45deg, #8B3AE8 0%, #E00B45 100%, #C59237 100%);
-
+    height: 5vh;
+    width: 25vw;
     border-width: 4px;
     border-radius: 6px;
-    display: inline-block;
+    margin-left: 15vw;
     }
 
     li {

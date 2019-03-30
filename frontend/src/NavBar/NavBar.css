@@ -1,3 +1,11 @@
 .navWide .wideDiv h1 {
     cursor:pointer;
+    color: white;
+}
+
+.navWide .wideDiv h1 svg{
+    cursor:pointer;
+    color: white;
+    height: 1.5em;
+    width: 1.5em;
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import DropDown from '../DropDown/DropDown'
 import './Card.css'
+import { TiPencil, TiTrash } from "react-icons/ti";
+import { FaRegSave } from "react-icons/fa"; 
 
 
 class Header extends React.Component  {
@@ -79,11 +81,15 @@ class Header extends React.Component  {
             if (this.state.edit) {
                 return (
                     <div className="card">
-                            <p>Edit {this.state.application_name}'s name</p>
+                            <p>Edit {this.state.application_name}'s name or status</p>
                             <textarea value={this.state.value} onChange={this.handleChange} />
-                            <button onClick={this.handleToggleClick}>Save</button>
-                            <p>Edit {this.state.application_name}'s status</p>
-    
+
+                            <h3> 
+                            <button onClick={this.handleToggleClick}>
+                            <FaRegSave />
+                            </button>
+                            </h3>
+                            <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
                     </div>
                 )
                 
@@ -93,14 +99,19 @@ class Header extends React.Component  {
                         <div className="app-name">
                             <h3> {this.state.application_name} 
                                 <button onClick={this.handleToggleClick}>
-                                    Edit Name
+                                    <TiPencil />
+                                </button>
+                            </h3>
+
+                            <h3>
+                                <button>
+                                    <TiTrash />
                                 </button>
                             </h3>
                         </div>
     
                         <div class="status">
                             <h3> Status: {this.state.application_status} 
-                            <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
                             </h3>
                         </div>
                     </div>
