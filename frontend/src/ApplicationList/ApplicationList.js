@@ -15,7 +15,6 @@ class ApplicationList extends React.Component {
 
     componentDidMount() {
         this.getApplications()
-        console.log('in the ApplicationList component, these props are available: ' + JSON.stringify(this.props))
     }
 
     handleChange(event) {
@@ -23,12 +22,12 @@ class ApplicationList extends React.Component {
       }
     
     handleSubmit(event) {
-        // console.log(this.state.value);
         event.preventDefault();
         this.createApplication();
     }
 
     getApplications() {
+        console.log('The child component Card called the parent components getApplications() function.')
         fetch('http://localhost/applications')
         .then((response) => response.json())
         .then((data) => {
@@ -38,32 +37,47 @@ class ApplicationList extends React.Component {
         .then((dataArr) => this.setState({ applications: dataArr }))
         .catch(err => {
             console.log(err)
-    })
+        })
+    }
+
+    deleteApplicationFromState = (appId) => {
+        let newArray = [...this.state.applications]
+
+        const checkId = (element) => {
+            return element._id.$oid >= appId;
+        }
+        let idToDelete = newArray.findIndex(checkId)
+
+        newArray.splice(idToDelete, 1)
+        this.setState({ applications: newArray })
+
+        console.log('now lets check using findINDEX')
+        
     }
   
-       createApplication(url = `http://localhost/new-application`, data = {
-         application_name: this.state.value,
-         application_status: "green"
-       }) {
-          return fetch(url, {
-              method: "POST", 
-              mode: "cors", 
-              cache: "no-cache", 
-              credentials: "same-origin", 
-              headers: {
-                  "Content-Type": "application/json",
-                  
-              },
-              redirect: "follow",
-              referrer: "no-referrer",
-              body: JSON.stringify(data),
-          })
-          .then(response => {
-              response.json()
-            this.getApplications()
-            })
-          .catch(err => console.log(err))
-      }
+    createApplication(url = `http://localhost/new-application`, data = {
+        application_name: this.state.value,
+        application_status: "green"
+    }) {
+        return fetch(url, {
+            method: "POST", 
+            mode: "cors", 
+            cache: "no-cache", 
+            credentials: "same-origin", 
+            headers: {
+                "Content-Type": "application/json",
+                
+            },
+            redirect: "follow",
+            referrer: "no-referrer",
+            body: JSON.stringify(data),
+        })
+        .then(response => {
+            response.json()
+        this.getApplications()
+        })
+        .catch(err => console.log(err))
+    }
       
 
     render()  {
@@ -77,7 +91,10 @@ class ApplicationList extends React.Component {
             <ul>
                 {this.state.applications.map((name, index) => {
                     return <li key={ index }>
-                                <Card application={name} getApplicationsThroughParent={this.getApplications} parentEdit={this.props.edit} />
+                                <Card application={name} 
+                                getApplicationsThroughParent={this.getApplications} 
+                                parentEdit={this.props.edit}
+                                deleteApplicationFromState={this.deleteApplicationFromState} />
                             </li>;
                   })}
             </ul>
@@ -89,7 +106,10 @@ class ApplicationList extends React.Component {
                 <ul>
                     {this.state.applications.map((name, index) => {
                         return <li key={ index }>
-                                    <Card application={name} getApplicationsThroughParent={this.getApplications} parentEdit={this.props.edit} />
+                                    <Card application={name} 
+                                    getApplicationsThroughParent={this.getApplications} 
+                                    parentEdit={this.props.edit}
+                                    deleteApplicationFromState={this.deleteApplicationFromState} />
                                 </li>;
                     })}
                 </ul>

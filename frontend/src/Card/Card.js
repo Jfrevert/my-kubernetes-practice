@@ -1,5 +1,6 @@
 import React from 'react';
 import DropDown from '../DropDown/DropDown'
+import Face from '../Face/Face'
 import './Card.css'
 import { TiPencil, TiTrash } from "react-icons/ti";
 import { FaRegSave } from "react-icons/fa"; 
@@ -17,10 +18,7 @@ class Header extends React.Component  {
         };
         this.handleToggleClick = this.handleToggleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
-      }
 
-      componentDidMount () {
-          console.log('in the card component, these props are available: ' + JSON.stringify(this.props))
       }
 
       handleToggleClick() {
@@ -31,7 +29,7 @@ class Header extends React.Component  {
           edit: !state.edit
         }));
       }
-      
+
     handleSubmit() {
         const data = {
             _id: this.props.application._id.$oid ,
@@ -56,9 +54,24 @@ class Header extends React.Component  {
                                  }, () => {
                                      this.props.getApplicationsThroughParent()
                                  })
+                } else {
+                    alert('there was an error: ' + resp.status + " " + resp.err)
                 }
             })
             .catch(err => console.log("There was an error: " + err))
+      }
+
+      handleDelete = () => {
+
+        fetch('http://localhost/delete?application=' + this.props.application._id.$oid, {method: "DELETE"})
+        .then(resp => {
+            if (resp.status >= 200 && resp.status < 300){
+                this.props.deleteApplicationFromState(this.props.application._id.$oid)
+            } else {
+                alert('error: '+ resp.status)
+            }
+        })
+
       }
 
       handleChange(event) {
@@ -76,12 +89,11 @@ class Header extends React.Component  {
 
     render(props) {
 
-
         if(this.props.parentEdit){
             if (this.state.edit) {
                 return (
                     <div className="card">
-                            <p>Edit {this.state.application_name}'s name or status</p>
+                            <p>Name:</p>
                             <textarea value={this.state.value} onChange={this.handleChange} />
 
                             <h3> 
@@ -89,7 +101,7 @@ class Header extends React.Component  {
                             <FaRegSave />
                             </button>
                             </h3>
-                            <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
+                            Status: <DropDown setParentStateFromChild={this.setStateFromChild} selectedStatus={this.state.application_status} />
                     </div>
                 )
                 
@@ -104,7 +116,7 @@ class Header extends React.Component  {
                             </h3>
 
                             <h3>
-                                <button>
+                                <button onClick={this.handleDelete}>
                                     <TiTrash />
                                 </button>
                             </h3>
@@ -113,6 +125,8 @@ class Header extends React.Component  {
                         <div class="status">
                             <h3> Status: {this.state.application_status} 
                             </h3>
+                            <Face color={this.state.application_status}/>
+
                         </div>
                     </div>
                 );
@@ -128,6 +142,7 @@ class Header extends React.Component  {
                     <div class="status">
                         <h3> Status: {this.state.application_status} 
                         </h3>
+                        <Face color={this.state.application_status}/>
                     </div>
                 </div>
             );

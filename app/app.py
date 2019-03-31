@@ -8,7 +8,7 @@ from flask_cors import CORS
 
 client = MongoClient('mongodb://db:27017/')
 db = client.appdb
-components = db.components
+applications = db.applications
 
 app = Flask(__name__)
 CORS(app)
@@ -20,9 +20,9 @@ def index():
 
 @app.route("/search")
 def search():
-    search_param = request.args.get("component")
+    search_param = request.args.get("application")
     json_docs = []
-    for doc in components.find({"component_name": search_param}):
+    for doc in applications.find({"application_name": search_param}):
         json_doc = json.dumps(doc, default=json_util.default)
         json_docs.append(json_doc)
     return Response(json_docs, status=200, mimetype="application/json")
@@ -31,39 +31,43 @@ def search():
 
 @app.route("/get")
 def get():
-    retrieve_param = request.args.get("component")
-    result = components.find_one({'_id': ObjectId(retrieve_param)})
-    output = {'component_name' : result['component_name'], 'component_status' : result['component_status']}
+    retrieve_param = request.args.get("application")
+    result = applications.find_one({'_id': ObjectId(retrieve_param)})
+    output = {'application_name' : result['application_name'], 'application_status' : result['application_status']}
 
     return jsonify({'result' : output})
 
-
-
-@app.route("/components")
-def get_components():
-    json_doc = dumps(components.find())
+@app.route("/applications")
+def get_applications():
+    json_doc = dumps(applications.find())
     return Response(json_doc, status=200, mimetype="application/json")
 
-@app.route("/new-component", methods=['POST'])
-def create_component_response():
-    component_name = request.json['component_name']
-    status = request.json['component_status']
-    post_id = components.insert_one({'component_name': component_name, 'component_status': status}).inserted_id
-    new_component = components.find_one({'_id': post_id })
-    output = {'component_name' : new_component['component_name'], 'component_status' : new_component['component_status']}
+@app.route("/new-application", methods=['POST'])
+def create_application():
+    application_name = request.json['application_name']
+    status = request.json['application_status']
+    post_id = applications.insert_one({'application_name': application_name, 'application_status': status}).inserted_id
+    new_application = applications.find_one({'_id': post_id })
+    output = {'application_name' : new_application['application_name'], 'application_status' : new_application['application_status']}
     return jsonify({'result' : output})
 
 @app.route("/edit", methods=['PUT'])
 # @cross_origin()
-def update_component_response():
+def update_application():
     req_data = request.get_json()
     post_id = request.json['_id']
-    updated_component_name = request.json['component_name']
-    updated_component_status = request.json['component_status']
+    updated_application_name = request.json['application_name']
+    updated_application_status = request.json['application_status']
     
-    updated_component = components.replace_one({'_id': ObjectId(post_id)}, {'component_name': updated_component_name, 'component_status': updated_component_status})
-    # updated_component.headers.add('Access-Control-Allow-Origin', '*')
-    return Response('', status=200, mimetype="application/json")
+    updated_application = applications.replace_one({'_id': ObjectId(post_id)}, {'application_name': updated_application_name, 'application_status': updated_application_status})
+    # updated_application.headers.add('Access-Control-Allow-Origin', '*')
+    return Response(update_application)
+
+@app.route("/delete", methods=['DELETE'])
+def delete_application():
+    doc_id = request.args.get("application")
+    deleted_document = applications.delete_one({'_id': ObjectId(doc_id)})
+    return Response(deleted_document)
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=80, debug=True)
