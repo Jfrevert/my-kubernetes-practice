@@ -41,9 +41,6 @@ form {
     font-weight: bold;
     color: white;
     border-color: #8B3AE8;
-    border-color: -moz-linear-gradient(45deg, #8B3AE8 0%, #E00B45 100%, #C59237 100%);
-    border-color: -webkit-linear-gradient(45deg, #8B3AE8 0%, #E00B45 100%, #C59237 100%);
-    border-color: linear-gradient(45deg, #8B3AE8 0%, #E00B45 100%, #C59237 100%);
     height: 5vh;
     width: 25vw;
     border-width: 4px;
